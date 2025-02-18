@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B3E5FC"
+    tools:context=".MainActivity">
+
+    <!-- Toolbar with menu and search -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@android:color/black">
+
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="60dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_menu" />
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableLeft="@drawable/ic_search"
+            android:hint="Search" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Icon Grid -->
+    <GridLayout
+        android:id="@+id/icon_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:columnCount="2"
+        android:rowCount="2"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_wallet" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_receipt" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_coins" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_transaction" />
+    </GridLayout>
+
+    <!-- Add Expense Button -->
+    <Button
+        android:id="@+id/btn_add_expense"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:text="ADD EXPENSE"
+        android:backgroundTint="@color/green"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"/>
+
+    <!-- Profile Icon -->
+    <ImageView
+        android:id="@+id/profile_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
