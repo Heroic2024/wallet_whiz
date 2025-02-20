@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#caaa94"
+    android:background="#B3E5FC"
     tools:context=".MainActivity">
 
     <!-- Toolbar with menu and search -->
@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="B3E5FC"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@android:color/black">
 
@@ -23,7 +23,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="60dp"
             android:padding="10dp"
-            android:src="@drawable/ic_menu" />
+            android:src="@drawable/m" />
 
         <EditText
             android:id="@+id/search_bar"
@@ -52,24 +52,25 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:id="@+id/"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_wallet" />
+            android:src="@drawable/b" />
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_receipt" />
+            android:src="@drawable/a" />
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_coins" />
+            android:src="@drawable/n" />
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_transaction" />
+            android:src="@drawable/t" />
     </GridLayout>
 
     <!-- Add Expense Button -->
@@ -89,8 +90,20 @@
         android:id="@+id/profile_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="415dp"
+        android:layout_height="102dp"
+        android:gravity="center_horizontal"
+        android:paddingVertical="25dp"
+        android:text="Wallet Whiz"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
