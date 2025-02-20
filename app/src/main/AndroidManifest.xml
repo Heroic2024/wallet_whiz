@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MainProject"
         tools:targetApi="31">
+        <activity android:name=".bitcoin"
+            android:exported="false"/>
         <activity
             android:name=".expense_tracker"
             android:exported="false" />
