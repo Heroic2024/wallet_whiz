@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#9C27B0"
     tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="415dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Wallet Whiz"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <!-- Toolbar with menu and search -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="B3E5FC"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@android:color/black">
 
@@ -21,19 +33,18 @@
             android:id="@+id/menu_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:padding="10dp"
-            android:src="@drawable/ic_menu" />
+            android:src="@drawable/m" />
 
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:drawableLeft="@drawable/ic_search"
             android:hint="Search" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -42,9 +53,10 @@
         android:id="@+id/icon_grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="150dp"
         android:columnCount="2"
         android:rowCount="2"
+        android:layout_gravity="center_horizontal"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -52,24 +64,25 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:id="@+id/img_1"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_wallet" />
+            android:src="@drawable/b" />
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_receipt" />
+            android:src="@drawable/a" />
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_coins" />
+            android:src="@drawable/n" />
 
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/ic_transaction" />
+            android:src="@drawable/t" />
     </GridLayout>
 
     <!-- Add Expense Button -->
@@ -78,19 +91,22 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="ADD EXPENSE"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/white"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"/>
+        android:layout_margin="15dp"/>
 
     <!-- Profile Icon -->
     <ImageView
         android:id="@+id/profile_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/user"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="right"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#B3E5FC">
+
+    <!-- Title of the App -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expense Tracker"
+        android:textSize="24sp"
+        android:textColor="#2b2b2b"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Add Expense Button -->
+    <Button
+        android:id="@+id/addExpenseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Expense"
+        android:background="#00796b"
+        android:textColor="#ffffff"
+        android:padding="14dp"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Date Picker for selecting the date -->
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Date"
+        android:textSize="16sp"
+        android:textColor="#2b2b2b"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="YYYY-MM-DD"
+        android:inputType="date"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_bg"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Category selection for expense -->
+    <TextView
+        android:id="@+id/categoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Category"
+        android:textSize="16sp"
+        android:textColor="#2b2b2b"
+        android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Amount input field -->
+    <TextView
+        android:id="@+id/amountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Amount"
+        android:textSize="16sp"
+        android:textColor="#2b2b2b"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/amountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Amount in USD"
+        android:inputType="numberDecimal"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_bg"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Notes input -->
+    <TextView
+        android:id="@+id/notesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notes (optional)"
+        android:textSize="16sp"
+        android:textColor="#2b2b2b"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/notesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Any notes?"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_bg"
+        android:layout_marginBottom="16dp"
+        android:maxLines="3"
+        android:inputType="textMultiLine"/>
+
+    <!-- Save Expense Button -->
+    <Button
+        android:id="@+id/saveExpenseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Expense"
+        android:background="#00796b"
+        android:textColor="#ffffff"
+        android:padding="14dp"/>
+
+    <!-- RecyclerView for displaying list of expenses -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expenseListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:scrollbars="vertical"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+</LinearLayout>
