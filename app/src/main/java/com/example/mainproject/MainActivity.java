@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         img1 = findViewById(R.id.img_1);
         img3 = findViewById(R.id.img_3);
-        img4 = findViewById(R.id.img_4);
 
 
         img1.setOnClickListener(new View.OnClickListener() {
@@ -46,14 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        img4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an Intent to start another activity
-                Intent intent3 = new Intent(MainActivity.this, expense_history.class);
-                startActivity(intent3);  // Start the new activity
 
-            }
-        });
     }
 }
