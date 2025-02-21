@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton img1;
+    ImageButton img1,img3,img4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +24,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         img1 = findViewById(R.id.img_1);
+        img3 = findViewById(R.id.img_3);
+        img4 = findViewById(R.id.img_4);
 
-        // Set an OnClickListener to the ImageView
+
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create an Intent to start another activity
-                Intent intent = new Intent(MainActivity.this, bitcoin.class);
-                startActivity(intent);  // Start the new activity
+                Intent intent1 = new Intent(MainActivity.this, bitcoin.class);
+                startActivity(intent1);  // Start the new activity
+
+            }
+        });
+        img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start another activity
+                Intent intent2 = new Intent(MainActivity.this, expense_history.class);
+                startActivity(intent2);  // Start the new activity
+
+            }
+        });
+        img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start another activity
+                Intent intent3 = new Intent(MainActivity.this, expense_history.class);
+                startActivity(intent3);  // Start the new activity
+
             }
         });
     }
