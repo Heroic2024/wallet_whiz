@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3E5FC"
+    android:background="#B3E5"
     tools:context=".MainActivity">
     <TextView
         android:id="@+id/textView"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
+        <ImageButton
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/img_1"
