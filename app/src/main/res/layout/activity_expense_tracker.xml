@@ -46,7 +46,6 @@
         android:hint="YYYY-MM-DD"
         android:inputType="date"
         android:padding="12dp"
-        android:background="@drawable/edit_text_bg"
         android:layout_marginBottom="16dp"/>
 
     <!-- Category selection for expense -->
@@ -82,7 +81,6 @@
         android:hint="Amount in USD"
         android:inputType="numberDecimal"
         android:padding="12dp"
-        android:background="@drawable/edit_text_bg"
         android:layout_marginBottom="16dp"/>
 
     <!-- Notes input -->
@@ -101,7 +99,6 @@
         android:layout_height="wrap_content"
         android:hint="Any notes?"
         android:padding="12dp"
-        android:background="@drawable/edit_text_bg"
         android:layout_marginBottom="16dp"
         android:maxLines="3"
         android:inputType="textMultiLine"/>
