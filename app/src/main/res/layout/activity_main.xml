@@ -13,7 +13,7 @@
         android:layout_width="415dp"
         android:textColor="@color/black"
         android:layout_marginTop="25dp"
-        android:background="#FF5722"
+        android:background="#B3E5FC"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="Wallet Whiz"
@@ -27,7 +27,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF5722"
+        android:background="#2196F3"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@android:color/black">
 
