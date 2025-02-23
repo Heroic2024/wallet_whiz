@@ -6,121 +6,122 @@
     android:padding="16dp"
     android:background="#B3E5FC">
 
-    <!-- Title of the App -->
+    <!-- Header Section -->
     <TextView
-        android:id="@+id/appTitle"
+        android:id="@+id/header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add your expense"
+        android:text="Expense Tracker"
         android:textSize="24sp"
-        android:textColor="#2b2b2b"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#333"
+        android:layout_marginTop="16dp"
+        android:gravity="center" />
 
-    <!-- Add Expense Button -->
+    <!-- Balance Section -->
+    <TextView
+        android:id="@+id/balance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Balance:"
+        android:textSize="16sp"
+        android:textColor="#555" />
+
+    <TextView
+        android:id="@+id/balance_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹1000.00"
+        android:textSize="20sp"
+        android:textColor="#00796b"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Expense Input Section -->
+    <EditText
+        android:id="@+id/expense_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Expense Name (e.g. Groceries)"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:background="#ffffff"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/expense_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Amount (e.g. 50.00)"
+        android:textSize="16sp"
+        android:inputType="numberDecimal"
+        android:padding="10dp"
+        android:background="#ffffff"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/expense_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date (e.g. 2025-02-23)"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:background="#ffffff"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Button to Add Expense -->
     <Button
-        android:id="@+id/addExpenseButton"
+        android:id="@+id/add_expense_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Expense"
+        android:textSize="18sp"
         android:background="#00796b"
         android:textColor="#ffffff"
-        android:padding="14dp"
-        android:layout_marginBottom="20dp"/>
+        android:padding="10dp"
+        android:layout_marginBottom="16dp" />
 
-    <!-- Date Picker for selecting the date -->
+    <!-- List of Expenses -->
     <TextView
-        android:id="@+id/dateLabel"
+        android:id="@+id/expenses_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Date"
-        android:textSize="16sp"
-        android:textColor="#2b2b2b"
-        android:layout_marginBottom="8dp"/>
+        android:text="Expenses"
+        android:textSize="18sp"
+        android:textColor="#333"
+        android:layout_marginBottom="8dp" />
 
-    <EditText
-        android:id="@+id/dateEditText"
+    <ListView
+        android:id="@+id/expense_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:background="#ffffff" />
+
+    <!-- Total Expenses Section -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="YYYY-MM-DD"
-        android:inputType="date"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingTop="16dp">
 
-    <!-- Category selection for expense -->
-    <TextView
-        android:id="@+id/categoryLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Category"
-        android:textSize="16sp"
-        android:textColor="#2b2b2b"
-        android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/total_expenses_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Expenses:"
+            android:textSize="16sp"
+            android:textColor="#555"
+            android:layout_marginEnd="8dp" />
 
-    <Spinner
-        android:id="@+id/categorySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Amount input field -->
-    <TextView
-        android:id="@+id/amountLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Amount"
-        android:textSize="16sp"
-        android:textColor="#2b2b2b"
-        android:layout_marginBottom="8dp"/>
-
-    <EditText
-        android:id="@+id/amountEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Amount in USD"
-        android:inputType="numberDecimal"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Notes input -->
-    <TextView
-        android:id="@+id/notesLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Notes (optional)"
-        android:textSize="16sp"
-        android:textColor="#2b2b2b"
-        android:layout_marginBottom="8dp"/>
-
-    <EditText
-        android:id="@+id/notesEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Any notes?"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"
-        android:maxLines="3"
-        android:inputType="textMultiLine"/>
-
-    <!-- Save Expense Button -->
-    <Button
-        android:id="@+id/saveExpenseButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Expense"
-        android:background="#00796b"
-        android:textColor="#ffffff"
-        android:padding="14dp"/>
-
-    <!-- RecyclerView for displaying list of expenses -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/expenseListRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:scrollbars="vertical"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
+        <TextView
+            android:id="@+id/total_expenses_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹0.00"
+            android:textSize="18sp"
+            android:textColor="#d32f2f" />
+    </LinearLayout>
 
 </LinearLayout>
