@@ -1,21 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#B3E5FC"
-    tools:context=".expense_history">
-
+    android:padding="10dp">
     <TextView
+        android:layout_width="394dp"
+        android:layout_height="62dp"
+        android:background="#2160F3"
+        android:gravity="center_horizontal"
+        android:paddingTop="8dp"
+        android:textColor="#FFFCFC"
+        android:layout_marginTop="25dp"
+        android:textSize="30dp"
+        tools:text="History" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/datetime_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="History"
-        android:textSize="20dp"
-        android:gravity="center_horizontal"
-        />
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="16dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:onClick="showDateTimePicker"
+        android:padding="12dp"
+        android:text="Select Date"
+        android:textColor="#00796b"
+        android:textSize="18sp" />
 
+    <!-- Overview Section -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/overview_card"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Current Balance -->
+            <TextView
+                android:id="@+id/current_balance_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Current Balance"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/current_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000.00 USD"
+                android:textColor="#00796b"
+                android:textSize="20sp" />
+
+            <!-- Total Expenses -->
+            <TextView
+                android:id="@+id/total_expenses_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Total Expenses"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/total_expenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="150.00 USD"
+                android:textColor="#d32f2f"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>
