@@ -15,7 +15,7 @@
         android:textColor="#FFFCFC"
         android:layout_marginTop="25dp"
         android:textSize="30dp"
-        tools:text="History" />
+        android:text="History" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/datetime_picker"
@@ -36,8 +36,6 @@
     <!-- Overview Section -->
     <androidx.cardview.widget.CardView
         android:id="@+id/overview_card"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
