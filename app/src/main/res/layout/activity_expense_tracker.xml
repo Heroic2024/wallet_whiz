@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5ED762"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header Section -->
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Expense Tracker"
+        android:textColor="#333"
+        android:textSize="24sp" />
+
+    <!-- Balance Section -->
+    <TextView
+        android:id="@+id/balance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Balance:"
+        android:textColor="#555"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/balance_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="₹1000.00"
+        android:textColor="#00796b"
+        android:textSize="20sp" />
+
+    <!-- Expense Input Section -->
+    <EditText
+        android:id="@+id/expense_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="#ffffff"
+        android:hint="Expense Name (e.g. Groceries)"
+        android:padding="10dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/expense_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="#ffffff"
+        android:hint="Amount (e.g. 50.00)"
+        android:inputType="numberDecimal"
+        android:padding="10dp"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/expense_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="#ffffff"
+        android:hint="Date (e.g. 2025-02-23)"
+        android:padding="10dp"
+        android:textSize="16sp" />
+
+    <!-- Button to Add Expense -->
+    <Button
+        android:id="@+id/add_expense_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="#00796b"
+        android:padding="10dp"
+        android:text="Add Expense"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+    <!-- List of Expenses -->
+    <TextView
+        android:id="@+id/expenses_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Expenses"
+        android:textColor="#333"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/expense_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+    <!-- Total Expenses Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/total_expenses_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Total Expenses:"
+            android:textColor="#555"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/total_expenses_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹0.00"
+            android:textColor="#d32f2f"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>
