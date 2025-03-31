@@ -12,7 +12,7 @@
         android:id="@+id/txt_help_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Help & Support"
+        android:text="Help and Support"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
