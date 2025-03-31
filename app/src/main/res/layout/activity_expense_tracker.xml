@@ -2,126 +2,155 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#011402"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#B3E5FC">
+    android:padding="16dp">
 
     <!-- Header Section -->
     <TextView
         android:id="@+id/header_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Expense Tracker"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
-        android:textColor="#333"
-        android:layout_marginTop="16dp"
-        android:gravity="center" />
+        android:textStyle="bold"
+        android:paddingBottom="10dp" />
 
     <!-- Balance Section -->
-    <TextView
-        android:id="@+id/balance_label"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Current Balance:"
-        android:textSize="16sp"
-        android:textColor="#555" />
+        android:background="#021805"
+        android:elevation="6dp"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/balance_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="₹1000.00"
-        android:textSize="20sp"
-        android:textColor="#00796b"
-        android:layout_marginBottom="16dp" />
+        <TextView
+            android:id="@+id/balance_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Balance"
+            android:textColor="#F6F3F3"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/balance_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹1000.00"
+            android:textColor="#41F022"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="4dp" />
+    </LinearLayout>
 
     <!-- Expense Input Section -->
-    <EditText
-        android:id="@+id/expense_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Expense Name (e.g. Groceries)"
-        android:textSize="16sp"
-        android:padding="10dp"
-        android:background="#ffffff"
-        android:layout_marginBottom="8dp" />
+        android:background="#021805"
+        android:elevation="6dp"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/expense_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Amount (e.g. 50.00)"
-        android:textSize="16sp"
-        android:inputType="numberDecimal"
-        android:padding="10dp"
-        android:background="#ffffff"
-        android:layout_marginBottom="8dp" />
+        <EditText
+            android:id="@+id/expense_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Expense Name"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="#ffffff"
+            android:inputType="text" />
 
-    <EditText
-        android:id="@+id/expense_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Date (e.g. 2025-02-23)"
-        android:textSize="16sp"
-        android:padding="10dp"
-        android:background="#ffffff"
-        android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/expense_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount (₹)"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="#ffffff"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="8dp" />
 
-    <!-- Button to Add Expense -->
-    <Button
-        android:id="@+id/add_expense_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Expense"
-        android:textSize="18sp"
-        android:background="#00796b"
-        android:textColor="#ffffff"
-        android:padding="10dp"
-        android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/expense_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date (YYYY-MM-DD)"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="#ffffff"
+            android:inputType="date"
+            android:layout_marginTop="8dp" />
 
-    <!-- List of Expenses -->
+        <Button
+            android:id="@+id/add_expense_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Expense"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50"
+            android:layout_marginTop="12dp"
+            android:padding="12dp" />
+    </LinearLayout>
+
+    <!-- Expenses Header -->
     <TextView
         android:id="@+id/expenses_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expenses"
+        android:text="Recent Expenses"
+        android:textColor="#F2EDED"
         android:textSize="18sp"
-        android:textColor="#333"
-        android:layout_marginBottom="8dp" />
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
 
+    <!-- List of Expenses -->
     <ListView
         android:id="@+id/expense_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#ffffff"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        android:background="#ffffff" />
+        android:dividerHeight="1dp" />
 
     <!-- Total Expenses Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:gravity="end"
-        android:paddingTop="16dp">
+        android:padding="16dp"
+        android:background="#021805">
 
         <TextView
             android:id="@+id/total_expenses_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Expenses:"
+            android:text="Total Expenses: "
+            android:textColor="#FFF9F9"
             android:textSize="16sp"
-            android:textColor="#555"
-            android:layout_marginEnd="8dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/total_expenses_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="₹0.00"
+            android:textColor="#d32f2f"
             android:textSize="18sp"
-            android:textColor="#d32f2f" />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
