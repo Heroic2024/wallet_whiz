@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#011402"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/txt_help_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Help & Support"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"/>
+
+    <!-- FAQ Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frequently Asked Questions"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txt_faq"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="1. How to add an expense?\n2. How to set a budget?\n3. How to reset data?"
+        android:textColor="#B1F3A1"
+        android:textSize="14sp"
+        android:layout_marginTop="6dp"/>
+
+    <!-- Contact Support -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Support"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/txt_support_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email: support@walletwhiz.com"
+        android:textColor="#B1F3A1"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/txt_support_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone: +91 9876543210"
+        android:textColor="#B1F3A1"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Report an Issue -->
+    <Button
+        android:id="@+id/btn_report_issue"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Report an Issue"
+        android:textColor="#000000"
+        android:backgroundTint="#F4A22A"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Go Back Button -->
+    <Button
+        android:id="@+id/btn_go_back"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:textColor="#000000"
+        android:backgroundTint="#41F022"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
