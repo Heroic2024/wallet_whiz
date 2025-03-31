@@ -41,8 +41,8 @@ public class activity_auth extends AppCompatActivity {
             } else if (authenticateUser(email, password)) {
                 Toast.makeText(activity_auth.this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
-                // Redirect to Home Screen (Modify as needed)
-                Intent intent = new Intent(activity_auth.this, MainActivity.class);
+                // Redirect to Activity Budget Screen
+                Intent intent = new Intent(activity_auth.this, activity_budget.class);
                 startActivity(intent);
                 finish();
             } else {
