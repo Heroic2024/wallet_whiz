@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 if (insertUser(name, email, hashedPassword)) {
                     Toast.makeText(MainActivity.this, "Signup Successful!", Toast.LENGTH_SHORT).show();
 
-                    // Redirect to AuthActivity
+                    // Redirect to Login Activity
                     Intent intent = new Intent(MainActivity.this, activity_auth.class);
                     startActivity(intent);
                     finish(); // Close Signup Activity
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         txtLogin.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, activity_auth.class);
             startActivity(intent);
-            finish(); // Close Signup Activity
+            finish();
         });
     }
 
@@ -88,11 +88,9 @@ public class MainActivity extends AppCompatActivity {
     // Check if the email already exists
     private boolean checkUserExists(String email) {
         Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ?", new String[]{email});
-        try {
-            return cursor.getCount() > 0;
-        } finally {
-            cursor.close();
-        }
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
     }
 
     // Secure password hashing with SHA-256
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Close database when activity is destroyed
     @Override
     protected void onDestroy() {
         super.onDestroy();
