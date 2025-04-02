@@ -1,6 +1,7 @@
 package com.example.mainproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -31,6 +32,20 @@ public class activity_auth extends AppCompatActivity {
 
         // Open existing SQLite Database
         db = openOrCreateDatabase("UserDB", MODE_PRIVATE, null);
+        SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
+        boolean isBudgetSet = preferences.getBoolean("isBudgetSet", false);
+
+        if (isBudgetSet) {
+            // Skip budget screen and go directly to home
+            Intent intent = new Intent(activity_auth.this, activity_hp.class);
+            startActivity(intent);
+            finish();
+        } else {
+            // Show budget screen for first-time users
+            Intent intent = new Intent(activity_auth.this, activity_budget.class);
+            startActivity(intent);
+            finish();
+        }
 
         btnLogin.setOnClickListener(view -> {
             String email = edtEmail.getText().toString().trim();
