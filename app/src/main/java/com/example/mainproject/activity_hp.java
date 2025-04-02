@@ -35,6 +35,7 @@ public class activity_hp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity_hp.this, expense_tracker.class);
+                intent.putExtra("BUDGET_AMOUNT", budget != null ? Double.parseDouble(budget) : 0.0);
                 startActivity(intent);
             }
         });

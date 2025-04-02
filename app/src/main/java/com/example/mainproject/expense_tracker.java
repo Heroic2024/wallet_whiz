@@ -1,6 +1,7 @@
 package com.example.mainproject;
 
 import android.content.ContentValues;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Calendar;
 
 public class expense_tracker extends AppCompatActivity {
 
@@ -38,7 +40,9 @@ public class expense_tracker extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("BUDGET_AMOUNT")) {
             budget = intent.getDoubleExtra("BUDGET_AMOUNT", 0.0);
-            saveBudgetIfNotExists();
+            //saveBudgetIfNotExists();
+            Toast.makeText(this, "Received Budget: "+budget, Toast.LENGTH_LONG).show();
+            updateBudget(budget);
         }
 
         // Load saved budget and expenses (only totals now)
@@ -51,6 +55,14 @@ public class expense_tracker extends AppCompatActivity {
                 addExpense();
             }
         });
+
+        expenseDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
     }
 
     private void createTables() {
@@ -62,7 +74,7 @@ public class expense_tracker extends AppCompatActivity {
         }
     }
 
-    private void saveBudgetIfNotExists() {
+    /**private void saveBudgetIfNotExists() {
         Cursor cursor = database.rawQuery("SELECT amount FROM Budget LIMIT 1;", null);
         if (!cursor.moveToFirst()) {
             ContentValues values = new ContentValues();
@@ -70,6 +82,20 @@ public class expense_tracker extends AppCompatActivity {
             database.insert("Budget", null, values);
         }
         cursor.close();
+    }**/
+
+    private void updateBudget(double newBudget) {
+        ContentValues values = new ContentValues();
+        values.put("amount", newBudget);
+
+        int rowsAffected = database.update("Budget", values, null, null);
+
+        if (rowsAffected == 0) {
+            // If no existing budget, insert new one
+            database.insert("Budget", null, values);
+        }
+
+        loadBudget(); // Refresh displayed budget
     }
 
     private void loadBudget() {
@@ -131,5 +157,23 @@ public class expense_tracker extends AppCompatActivity {
         expenseName.setText("");
         expenseAmount.setText("");
         expenseDate.setText("");
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                    expenseDate.setText(selectedDate);
+                },
+                year, month, day
+        );
+
+        datePickerDialog.show();
     }
 }
