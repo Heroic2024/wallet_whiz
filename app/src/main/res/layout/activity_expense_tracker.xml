@@ -104,27 +104,6 @@
             android:padding="12dp" />
     </LinearLayout>
 
-    <!-- Expenses Header -->
-    <TextView
-        android:id="@+id/expenses_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recent Expenses"
-        android:textColor="#F2EDED"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
-
-    <!-- List of Expenses -->
-    <ListView
-        android:id="@+id/expense_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp" />
-
     <!-- Total Expenses Section -->
     <LinearLayout
         android:layout_width="match_parent"

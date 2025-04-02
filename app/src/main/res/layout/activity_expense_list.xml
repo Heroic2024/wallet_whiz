@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#011402"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header Section -->
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="All Expenses"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="10dp" />
+
+    <!-- List of Expenses -->
+    <ListView
+        android:id="@+id/expense_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
