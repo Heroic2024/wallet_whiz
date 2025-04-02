@@ -1,6 +1,6 @@
 package com.example.mainproject;
+
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -9,16 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
 
 public class expense_tracker extends AppCompatActivity {
 
     private TextView balanceAmount, totalExpensesAmount;
     private EditText expenseName, expenseAmount, expenseDate;
     private Button addExpenseButton;
-    private ListView expenseList;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> expenseItems;
 
     private SQLiteDatabase database;
     private double budget = 0.0, balance = 0.0, totalExpenses = 0.0;
@@ -34,11 +30,6 @@ public class expense_tracker extends AppCompatActivity {
         expenseAmount = findViewById(R.id.expense_amount);
         expenseDate = findViewById(R.id.expense_date);
         addExpenseButton = findViewById(R.id.add_expense_button);
-        expenseList = findViewById(R.id.expense_list);
-
-        expenseItems = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expenseItems);
-        expenseList.setAdapter(adapter);
 
         database = openOrCreateDatabase("WalletWhizDB", MODE_PRIVATE, null);
         createTables();
@@ -50,7 +41,7 @@ public class expense_tracker extends AppCompatActivity {
             saveBudgetIfNotExists();
         }
 
-        // Load saved budget and expenses
+        // Load saved budget and expenses (only totals now)
         loadBudget();
         loadExpenses();
 
@@ -88,28 +79,21 @@ public class expense_tracker extends AppCompatActivity {
         }
         cursor.close();
 
-        balance = budget;
+        balance = budget; // Initially, balance equals budget (expenses will deduct later)
         balanceAmount.setText("₹" + balance);
     }
 
     private void loadExpenses() {
-        Cursor cursor = database.rawQuery("SELECT name, amount, date FROM Expenses;", null);
+        Cursor cursor = database.rawQuery("SELECT amount FROM Expenses;", null);
         totalExpenses = 0.0;
-        expenseItems.clear();
-
         while (cursor.moveToNext()) {
-            String name = cursor.getString(0);
-            double amount = cursor.getDouble(1);
-            String date = cursor.getString(2);
-            totalExpenses += amount;
-            expenseItems.add(name + " - ₹" + amount + " (" + date + ")");
+            totalExpenses += cursor.getDouble(0);
         }
-
         cursor.close();
+
         balance = budget - totalExpenses;
         totalExpensesAmount.setText("₹" + totalExpenses);
         balanceAmount.setText("₹" + balance);
-        adapter.notifyDataSetChanged();
     }
 
     private void addExpense() {
@@ -141,9 +125,9 @@ public class expense_tracker extends AppCompatActivity {
         balanceAmount.setText("₹" + balance);
         totalExpensesAmount.setText("₹" + totalExpenses);
 
-        expenseItems.add(name + " - ₹" + amount + " (" + date + ")");
-        adapter.notifyDataSetChanged();
+        Toast.makeText(this, "Expense Added!", Toast.LENGTH_SHORT).show();
 
+        // Clear input fields
         expenseName.setText("");
         expenseAmount.setText("");
         expenseDate.setText("");

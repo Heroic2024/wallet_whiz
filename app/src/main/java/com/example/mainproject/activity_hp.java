@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class activity_hp extends AppCompatActivity {
 
     private TextView txtBalance;
-    private LinearLayout btnAddExpense;
+    private LinearLayout btnAddExpense, btnTransfer, btnOthers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,8 @@ public class activity_hp extends AppCompatActivity {
 
         txtBalance = findViewById(R.id.txt_balance);
         btnAddExpense = findViewById(R.id.btn_add_expense);
+        btnTransfer = findViewById(R.id.btn_transfer); // "History" button
+        btnOthers = findViewById(R.id.btn_others);
 
         // Retrieve budget amount from Intent
         String budget = getIntent().getStringExtra("BUDGET_AMOUNT");
@@ -33,6 +35,24 @@ public class activity_hp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity_hp.this, expense_tracker.class);
+                startActivity(intent);
+            }
+        });
+
+        // Click event to redirect to Expense List (History) page
+        btnTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity_hp.this, ExpenseListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Click event to redirect to Others page
+        btnOthers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity_hp.this, others.class);
                 startActivity(intent);
             }
         });

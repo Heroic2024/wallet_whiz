@@ -30,15 +30,28 @@
             android:name=".activity_budget"
             android:exported="false"/>
 
-        <!-- Register activity_hp here -->
         <activity
             android:name=".activity_hp"
             android:exported="false"/>
 
-        <activity android:name=".expense_tracker"
-            android:exported="false"></activity>
+        <activity
+            android:name=".expense_tracker"
+            android:exported="false"/>
+
+        <!-- Registering others activity -->
+        <activity
+            android:name=".others"
+            android:exported="false"/>
+
+        <activity android:name=".profile" android:exported="false"/>
+        <activity android:name=".activity_help" android:exported="false"/>
+        <activity android:name=".contact_us" android:exported="false"/>
+        <activity android:name=".activity_setting" android:exported="false"/>
+        <activity android:name=".ExpenseListActivity" android:exported="false"/>
+
+
+
 
 
     </application>
-
 </manifest>
