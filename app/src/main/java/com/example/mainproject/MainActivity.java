@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.btn_signup);
         txtLogin = findViewById(R.id.txt_login);
 
-        // Initialize SQLite Database
+        // Open or create the SQLite database and ensure the users table exists
         db = openOrCreateDatabase("UserDB", MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT UNIQUE, password TEXT)");
 
@@ -54,21 +55,20 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Error hashing password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (insertUser(name, email, hashedPassword)) {
                     Toast.makeText(MainActivity.this, "Signup Successful!", Toast.LENGTH_SHORT).show();
-
-                    // Redirect to Login Activity
+                    Log.d("SignupRedirect", "Redirecting to login screen...");
+                    // Redirect to the login screen (activity_auth.java)
                     Intent intent = new Intent(MainActivity.this, activity_auth.class);
                     startActivity(intent);
-                    finish(); // Close Signup Activity
+                    finish();
                 } else {
                     Toast.makeText(MainActivity.this, "Signup Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        // Redirect to Login Screen
+        // Redirect to the login screen if the user already has an account
         txtLogin.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, activity_auth.class);
             startActivity(intent);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Insert user data into SQLite
+    // Insert a new user into the database
     private boolean insertUser(String name, String email, String password) {
         ContentValues values = new ContentValues();
         values.put("name", name);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         return db.insert("users", null, values) != -1;
     }
 
-    // Check if the email already exists
+    // Check if a user with the given email already exists
     private boolean checkUserExists(String email) {
         Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ?", new String[]{email});
         boolean exists = cursor.getCount() > 0;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         return exists;
     }
 
-    // Secure password hashing with SHA-256
+    // Hash the password using SHA-256
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

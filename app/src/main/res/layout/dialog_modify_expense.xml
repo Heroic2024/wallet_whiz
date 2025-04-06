@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/dialog_edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Expense Name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/dialog_edt_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Amount"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/dialog_edt_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date (e.g., 2025-04-03)"
+        android:inputType="text"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>
