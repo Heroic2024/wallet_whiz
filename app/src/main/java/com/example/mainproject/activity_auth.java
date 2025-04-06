@@ -1,7 +1,6 @@
 package com.example.mainproject;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,22 +29,8 @@ public class activity_auth extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtSignup = findViewById(R.id.txt_signup);
 
-        // Open existing SQLite Database
+        // Open the SQLite database
         db = openOrCreateDatabase("UserDB", MODE_PRIVATE, null);
-        SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
-        boolean isBudgetSet = preferences.getBoolean("isBudgetSet", false);
-
-        if (isBudgetSet) {
-            // Skip budget screen and go directly to home
-            Intent intent = new Intent(activity_auth.this, activity_hp.class);
-            startActivity(intent);
-            finish();
-        } else {
-            // Show budget screen for first-time users
-            Intent intent = new Intent(activity_auth.this, activity_budget.class);
-            startActivity(intent);
-            finish();
-        }
 
         btnLogin.setOnClickListener(view -> {
             String email = edtEmail.getText().toString().trim();
@@ -55,8 +40,7 @@ public class activity_auth extends AppCompatActivity {
                 Toast.makeText(activity_auth.this, "All fields are required!", Toast.LENGTH_SHORT).show();
             } else if (authenticateUser(email, password)) {
                 Toast.makeText(activity_auth.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-
-                // Redirect to Activity Budget Screen
+                // Redirect to the budget screen (activity_budget.java)
                 Intent intent = new Intent(activity_auth.this, activity_budget.class);
                 startActivity(intent);
                 finish();
@@ -65,17 +49,17 @@ public class activity_auth extends AppCompatActivity {
             }
         });
 
-        // Redirect to SignUp Page
+        // Redirect to the signup screen if the user doesn't have an account
         txtSignup.setOnClickListener(view -> {
             Intent intent = new Intent(activity_auth.this, MainActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 
-    // Authenticate User by hashing input password and comparing with stored hash
+    // Authenticate the user by comparing the hashed password with the stored value
     private boolean authenticateUser(String email, String password) {
-        String hashedPassword = hashPassword(password); // Hash the input password
-
+        String hashedPassword = hashPassword(password);
         Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ? AND password = ?",
                 new String[]{email, hashedPassword});
         boolean exists = cursor.getCount() > 0;
@@ -83,7 +67,7 @@ public class activity_auth extends AppCompatActivity {
         return exists;
     }
 
-    // Hash password using SHA-256 (Same as MainActivity)
+    // Hash the password using SHA-256
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
