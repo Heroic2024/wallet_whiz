@@ -1,6 +1,7 @@
 package com.example.mainproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -38,14 +39,29 @@ public class activity_auth extends AppCompatActivity {
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(activity_auth.this, "All fields are required!", Toast.LENGTH_SHORT).show();
-            } else if (authenticateUser(email, password)) {
-                Toast.makeText(activity_auth.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                // Redirect to the budget screen (activity_budget.java)
-                Intent intent = new Intent(activity_auth.this, activity_budget.class);
-                startActivity(intent);
-                finish();
             } else {
-                Toast.makeText(activity_auth.this, "Invalid email or password!", Toast.LENGTH_SHORT).show();
+                String hashedPassword = hashPassword(password);
+                Cursor cursor = db.rawQuery("SELECT name FROM users WHERE email = ? AND password = ?",
+                        new String[]{email, hashedPassword});
+
+                if (cursor.moveToFirst()) {
+                    String name = cursor.getString(0);
+
+                    // Save to SharedPreferences
+                    SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username", name);
+                    editor.putString("email", email);
+                    editor.apply();
+
+                    Toast.makeText(activity_auth.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity_auth.this, activity_budget.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(activity_auth.this, "Invalid email or password!", Toast.LENGTH_SHORT).show();
+                }
+                cursor.close();
             }
         });
 
