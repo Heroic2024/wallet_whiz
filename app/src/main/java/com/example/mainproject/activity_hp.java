@@ -22,12 +22,20 @@ public class activity_hp extends AppCompatActivity {
         setContentView(R.layout.activity_hp);
 
         txtBalance = findViewById(R.id.txt_balance);
+        TextView txtWelcome = findViewById(R.id.txt_welcome);
+
+// Get username from SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
+        String username = preferences.getString("username", "User");
+
+// Set welcome message
+        txtWelcome.setText("Welcome, " + username + "!");
         btnAddExpense = findViewById(R.id.btn_add_expense);
         btnTransfer = findViewById(R.id.btn_transfer); // "History" button
         btnOthers = findViewById(R.id.btn_others);
 
-        SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
-        String budget = preferences.getString("budgetValue", null);
+        SharedPreferences preference = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
+        String budget = preference.getString("budgetValue", null);
 
         // If budget is not found in SharedPreferences, fetch from the database
         if (budget == null || budget.isEmpty() || budget.equals("0")) {

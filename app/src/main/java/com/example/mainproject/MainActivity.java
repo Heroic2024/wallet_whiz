@@ -1,6 +1,7 @@
 package com.example.mainproject;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -56,8 +57,16 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 if (insertUser(name, email, hashedPassword)) {
+                    // Save user details in SharedPreferences
+                    SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username", name);
+                    editor.putString("email", email);
+                    editor.apply();
+
                     Toast.makeText(MainActivity.this, "Signup Successful!", Toast.LENGTH_SHORT).show();
                     Log.d("SignupRedirect", "Redirecting to login screen...");
+
                     // Redirect to the login screen (activity_auth.java)
                     Intent intent = new Intent(MainActivity.this, activity_auth.class);
                     startActivity(intent);
