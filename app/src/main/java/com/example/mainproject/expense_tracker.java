@@ -1,10 +1,12 @@
 package com.example.mainproject;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 
@@ -16,6 +18,9 @@ public class expense_tracker extends AppCompatActivity {
 
     private DataBaseHelper dbHelper;
     private double budget = 0.0, balance = 0.0, totalExpenses = 0.0;
+
+    // Flag to ensure DatePickerDialog is shown only once at a time.
+    private boolean isDatePickerShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +47,78 @@ public class expense_tracker extends AppCompatActivity {
 
         addExpenseButton.setOnClickListener(v -> addExpense());
         viewExpensesButton.setOnClickListener(v -> startActivity(new Intent(expense_tracker.this, ExpenseListActivity.class)));
-        expenseDate.setOnClickListener(v -> showDatePickerDialog());
+
+        // When date field is clicked, show DatePickerDialog (with single-time triggering).
+        expenseDate.setOnClickListener(v -> {
+            if (!isDatePickerShowing) {
+                showDatePickerDialog();
+            }
+        });
     }
 
     private void addExpense() {
+        // Clear previous error messages
+        expenseName.setError(null);
+        expenseAmount.setError(null);
+        expenseDate.setError(null);
+
         String name = expenseName.getText().toString().trim();
         String amountStr = expenseAmount.getText().toString().trim();
         String date = expenseDate.getText().toString().trim();
+        boolean valid = true;
 
-        if (name.isEmpty() || amountStr.isEmpty() || date.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+        // Validate the input fields
+        if (name.isEmpty()) {
+            expenseName.setError("Expense name is required");
+            valid = false;
+        }
+        if (amountStr.isEmpty()) {
+            expenseAmount.setError("Expense amount is required");
+            valid = false;
+        }
+        if (date.isEmpty()) {
+            expenseDate.setError("Expense date is required");
+            valid = false;
+        }
+        if (!valid) {
             return;
         }
 
-        double amount = Double.parseDouble(amountStr);
+        double amount;
+        try {
+            amount = Double.parseDouble(amountStr);
+        } catch (NumberFormatException e) {
+            expenseAmount.setError("Enter a valid number");
+            return;
+        }
 
         if (amount > balance) {
+            expenseAmount.setError("Expense exceeds available balance");
             Toast.makeText(this, "Insufficient Balance!", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // If the expense amount is equal to or more than 80% of the current balance, show a warning alert
+        if (amount >= 0.8 * balance) {
+            new AlertDialog.Builder(this)
+                    .setTitle("High Expense Warning")
+                    .setMessage("The expense amount is 80% or more of your current balance. Do you want to continue?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            proceedAddingExpense(name, amount, date);
+                        }
+                    })
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .show();
+        } else {
+            // Proceed normally if the warning condition is not met.
+            proceedAddingExpense(name, amount, date);
+        }
+    }
+
+    // Method to insert expense into the database and update UI.
+    private void proceedAddingExpense(String name, double amount, String date) {
         dbHelper.insertExpense(name, amount, date);
 
         totalExpenses += amount;
@@ -77,7 +134,9 @@ public class expense_tracker extends AppCompatActivity {
         Toast.makeText(this, "Expense Added!", Toast.LENGTH_SHORT).show();
     }
 
+    // Show date picker with future dates disabled; ensure it's shown only once per tap.
     private void showDatePickerDialog() {
+        isDatePickerShowing = true;
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -91,8 +150,9 @@ public class expense_tracker extends AppCompatActivity {
                 },
                 year, month, day
         );
-
+        // Disable future dates
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.setOnDismissListener(dialog -> isDatePickerShowing = false);
         datePickerDialog.show();
     }
-
 }

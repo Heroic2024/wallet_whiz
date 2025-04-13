@@ -34,35 +34,59 @@ public class activity_auth extends AppCompatActivity {
         db = openOrCreateDatabase("UserDB", MODE_PRIVATE, null);
 
         btnLogin.setOnClickListener(view -> {
+            // Clear any previous errors
+            edtEmail.setError(null);
+            edtPassword.setError(null);
+
             String email = edtEmail.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
+            boolean valid = true;
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(activity_auth.this, "All fields are required!", Toast.LENGTH_SHORT).show();
-            } else {
-                String hashedPassword = hashPassword(password);
-                Cursor cursor = db.rawQuery("SELECT name FROM users WHERE email = ? AND password = ?",
-                        new String[]{email, hashedPassword});
-
-                if (cursor.moveToFirst()) {
-                    String name = cursor.getString(0);
-
-                    // Save to SharedPreferences
-                    SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("username", name);
-                    editor.putString("email", email);
-                    editor.apply();
-
-                    Toast.makeText(activity_auth.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(activity_auth.this, activity_budget.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(activity_auth.this, "Invalid email or password!", Toast.LENGTH_SHORT).show();
-                }
-                cursor.close();
+            // Check if email field is empty
+            if (email.isEmpty()) {
+                edtEmail.setError("Email is required!");
+                valid = false;
+            } else if (!isValidEmail(email)) {
+                edtEmail.setError("Please enter a valid email!");
+                valid = false;
             }
+
+            // Check if password field is empty
+            if (password.isEmpty()) {
+                edtPassword.setError("Password is required!");
+                valid = false;
+            }
+
+            // If any validation error exists, exit without proceeding further
+            if (!valid) {
+                return;
+            }
+
+            // Hash the entered password
+            String hashedPassword = hashPassword(password);
+            Cursor cursor = db.rawQuery("SELECT name FROM users WHERE email = ? AND password = ?",
+                    new String[]{email, hashedPassword});
+
+            if (cursor.moveToFirst()) {
+                String name = cursor.getString(0);
+
+                // Save login details to SharedPreferences
+                SharedPreferences preferences = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("username", name);
+                editor.putString("email", email);
+                editor.apply();
+
+                Toast.makeText(activity_auth.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity_auth.this, activity_budget.class);
+                startActivity(intent);
+                finish();
+            } else {
+                // Show errors inline on both fields when credentials are invalid
+                edtEmail.setError("Invalid email or password!");
+                edtPassword.setError("Invalid email or password!");
+            }
+            cursor.close();
         });
 
         // Redirect to the signup screen if the user doesn't have an account
@@ -73,14 +97,9 @@ public class activity_auth extends AppCompatActivity {
         });
     }
 
-    // Authenticate the user by comparing the hashed password with the stored value
-    private boolean authenticateUser(String email, String password) {
-        String hashedPassword = hashPassword(password);
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ? AND password = ?",
-                new String[]{email, hashedPassword});
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
-        return exists;
+    // Validate email format using patterns
+    private boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     // Hash the password using SHA-256

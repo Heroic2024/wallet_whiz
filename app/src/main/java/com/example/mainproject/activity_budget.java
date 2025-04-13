@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
-import android.widget.Toast;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,9 +27,22 @@ public class activity_budget extends AppCompatActivity {
         btnSetBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Clear any previous errors
+                edtBudget.setError(null);
+
                 String budget = edtBudget.getText().toString().trim();
                 if (budget.isEmpty()) {
-                    Toast.makeText(activity_budget.this, "Please enter a budget", Toast.LENGTH_SHORT).show();
+                    edtBudget.setError("Please enter a budget");
+                    return;
+                }
+
+                // Validate that the budget is a valid number
+                double budgetValue;
+                try {
+                    budgetValue = Double.parseDouble(budget);
+                } catch (NumberFormatException e) {
+                    edtBudget.setError("Please enter a valid numeric budget");
                     return;
                 }
 
@@ -45,7 +57,7 @@ public class activity_budget extends AppCompatActivity {
                 // Ensure the Budget table exists
                 database.execSQL("CREATE TABLE IF NOT EXISTS Budget(id INTEGER PRIMARY KEY AUTOINCREMENT, amount REAL)");
                 ContentValues values = new ContentValues();
-                values.put("amount", Double.parseDouble(budget));
+                values.put("amount", budgetValue);
                 int rowsAffected = database.update("Budget", values, null, null);
                 if (rowsAffected == 0) {
                     database.insert("Budget", null, values);
