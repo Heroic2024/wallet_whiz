@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -120,7 +122,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_EXPENSES, null, values);
     }
 
-    // Get Total Expenses
+    // Get Total Expenses (all time)
     public double getTotalExpenses() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES, null);
@@ -132,5 +134,57 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return 0.0;
+    }
+
+    // --- New methods for Daily Expense Analysis ---
+
+    // Get total expense for a given date
+    public double getTotalExpenseByDate(String date) {
+        double total = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+        cursor.close();
+        return total;
+    }
+
+    // Get expense count for a given date
+    public int getExpenseCountByDate(String date) {
+        int count = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    // Get highest expense for a given date
+    public double getHighestExpenseByDate(String date) {
+        double highest = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT MAX(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        if (cursor.moveToFirst()) {
+            highest = cursor.getDouble(0);
+        }
+        cursor.close();
+        return highest;
+    }
+
+    // Get list of expenses for a given date (returns list of strings: "Name: ₹Amount")
+    public List<String> getExpensesByDate(String date) {
+        List<String> expenseDetails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_NAME + ", " + COLUMN_EXPENSE_AMOUNT + " FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        while (cursor.moveToNext()) {
+            String expenseName = cursor.getString(0);
+            double expenseAmount = cursor.getDouble(1);
+            expenseDetails.add(expenseName + ": ₹" + expenseAmount);
+        }
+        cursor.close();
+        return expenseDetails;
     }
 }
