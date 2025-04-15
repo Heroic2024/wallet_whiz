@@ -10,11 +10,16 @@ import android.widget.TextView;
 import android.database.Cursor;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.pm.PackageManager;
+import android.widget.Button;
+
 
 public class activity_hp extends AppCompatActivity {
 
     private TextView txtBalance;
-    private LinearLayout btnAddExpense, btnTransfer, btnOthers;
+    private LinearLayout btnAddExpense, btnTransfer, btnOthers, btnAnalysis;
+
+    Button btnOpenGPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,27 @@ public class activity_hp extends AppCompatActivity {
         btnAddExpense = findViewById(R.id.btn_add_expense);
         btnTransfer = findViewById(R.id.btn_transfer); // "History" button
         btnOthers = findViewById(R.id.btn_others);
+        btnAnalysis = findViewById(R.id.btn_analysis);
+        btnOpenGPay = findViewById(R.id.btn_open_gpay);
+
+// Optional: Hide button if GPay isn't installed
+        PackageManager pm = getPackageManager();
+        Intent gpayIntent = pm.getLaunchIntentForPackage("com.google.android.apps.nbu.paisa.user");
+
+
+        btnOpenGPay.setOnClickListener(v -> {
+            try {
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.google.android.apps.nbu.paisa.user");
+                if (intent != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Google Pay is not installed on this device.", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to launch Google Pay.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         SharedPreferences preference = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
         String budget = preference.getString("budgetValue", null);
@@ -106,6 +132,14 @@ public class activity_hp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity_hp.this, others.class);
+                startActivity(intent);
+            }
+        });
+
+        btnAnalysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity_hp.this, ActivityDailyAnalysis.class);
                 startActivity(intent);
             }
         });
