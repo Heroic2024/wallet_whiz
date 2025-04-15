@@ -38,5 +38,8 @@
         <activity android:name=".ExpenseListActivity" android:exported="false"/>
         <activity android:name=".ActivityDailyAnalysis" android:exported="false"/>
 
+        <!-- Add DailyAnalysisActivity here -->
+        <activity android:name=".DailyAnalysisActivity" android:exported="false"/>
+
     </application>
 </manifest>
