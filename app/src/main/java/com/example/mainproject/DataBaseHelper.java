@@ -14,14 +14,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "WalletWhizDB";
     private static final int DATABASE_VERSION = 2; // Incremented version
 
+    // Table and column names for Users table
     private static final String TABLE_USERS = "Users";
     private static final String COLUMN_USER_ID = "id";
     private static final String COLUMN_HAS_BUDGET = "has_set_budget";
 
+    // Table and column names for Budget table
     private static final String TABLE_BUDGET = "Budget";
     private static final String COLUMN_BUDGET_ID = "id";
     private static final String COLUMN_AMOUNT = "amount";
 
+    // Table and column names for Expenses table
     private static final String TABLE_EXPENSES = "Expenses";
     private static final String COLUMN_EXPENSE_ID = "id";
     private static final String COLUMN_NAME = "name";
@@ -35,16 +38,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
+            // Create Users table
             String createUsersTable = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + " (" +
                     COLUMN_USER_ID + " INTEGER PRIMARY KEY, " +
                     COLUMN_HAS_BUDGET + " INTEGER DEFAULT 0);";
             db.execSQL(createUsersTable);
 
+            // Create Budget table
             String createBudgetTable = "CREATE TABLE IF NOT EXISTS " + TABLE_BUDGET + " (" +
                     COLUMN_BUDGET_ID + " INTEGER PRIMARY KEY, " +
                     COLUMN_AMOUNT + " DOUBLE);";
             db.execSQL(createBudgetTable);
 
+            // Create Expenses table
             String createExpensesTable = "CREATE TABLE IF NOT EXISTS " + TABLE_EXPENSES + " (" +
                     COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAME + " TEXT, " +
@@ -62,6 +68,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Drop old tables if they exist and recreate
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUDGET);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXPENSES);
@@ -72,7 +79,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean hasSetBudget() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COLUMN_HAS_BUDGET + " FROM " + TABLE_USERS + " WHERE " + COLUMN_USER_ID + " = 1", null);
-
         boolean hasBudget = false;
         if (cursor.moveToFirst()) {
             hasBudget = cursor.getInt(0) == 1;
@@ -102,7 +108,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public double getBudget() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COLUMN_AMOUNT + " FROM " + TABLE_BUDGET + " WHERE " + COLUMN_BUDGET_ID + " = 1", null);
-
         if (cursor.moveToFirst()) {
             double budget = cursor.getDouble(0);
             cursor.close();
@@ -126,7 +131,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public double getTotalExpenses() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES, null);
-
         if (cursor.moveToFirst()) {
             double totalExpenses = cursor.getDouble(0);
             cursor.close();
@@ -136,13 +140,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return 0.0;
     }
 
-    // --- New methods for Daily Expense Analysis ---
+    // --- Daily Expense Analysis Methods ---
 
     // Get total expense for a given date
     public double getTotalExpenseByDate(String date) {
         double total = 0.0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES +
+                " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
         if (cursor.moveToFirst()) {
             total = cursor.getDouble(0);
         }
@@ -154,7 +159,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public int getExpenseCountByDate(String date) {
         int count = 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_EXPENSES +
+                " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
         if (cursor.moveToFirst()) {
             count = cursor.getInt(0);
         }
@@ -166,7 +172,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public double getHighestExpenseByDate(String date) {
         double highest = 0.0;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT MAX(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        Cursor cursor = db.rawQuery("SELECT MAX(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES +
+                " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
         if (cursor.moveToFirst()) {
             highest = cursor.getDouble(0);
         }
@@ -178,7 +185,64 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public List<String> getExpensesByDate(String date) {
         List<String> expenseDetails = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + COLUMN_NAME + ", " + COLUMN_EXPENSE_AMOUNT + " FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_NAME + ", " + COLUMN_EXPENSE_AMOUNT +
+                " FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " = ?", new String[]{date});
+        while (cursor.moveToNext()) {
+            String expenseName = cursor.getString(0);
+            double expenseAmount = cursor.getDouble(1);
+            expenseDetails.add(expenseName + ": ₹" + expenseAmount);
+        }
+        cursor.close();
+        return expenseDetails;
+    }
+
+    // --- Monthly Expense Analysis Methods ---
+
+    // Get total expense for a given month (e.g., "YYYY-MM")
+    public double getTotalExpenseByMonth(String month) {
+        double total = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES +
+                " WHERE " + COLUMN_DATE + " LIKE ?", new String[]{month + "-%"});
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+        cursor.close();
+        return total;
+    }
+
+    // Get expense count for a given month
+    public int getExpenseCountByMonth(String month) {
+        int count = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_EXPENSES +
+                " WHERE " + COLUMN_DATE + " LIKE ?", new String[]{month + "-%"});
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
+
+    // Get highest expense for a given month
+    public double getHighestExpenseByMonth(String month) {
+        double highest = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT MAX(" + COLUMN_EXPENSE_AMOUNT + ") FROM " + TABLE_EXPENSES +
+                " WHERE " + COLUMN_DATE + " LIKE ?", new String[]{month + "-%"});
+        if (cursor.moveToFirst()) {
+            highest = cursor.getDouble(0);
+        }
+        cursor.close();
+        return highest;
+    }
+
+    // Get list of expenses for a given month (returns list of strings: "Name: ₹Amount")
+    public List<String> getExpensesByMonth(String month) {
+        List<String> expenseDetails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_NAME + ", " + COLUMN_EXPENSE_AMOUNT +
+                " FROM " + TABLE_EXPENSES + " WHERE " + COLUMN_DATE + " LIKE ?", new String[]{month + "-%"});
         while (cursor.moveToNext()) {
             String expenseName = cursor.getString(0);
             double expenseAmount = cursor.getDouble(1);

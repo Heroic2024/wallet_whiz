@@ -3,6 +3,7 @@ package com.example.mainproject;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -165,6 +166,16 @@ public class ExpenseListActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("No", null)
                         .show();
+            }
+        });
+
+        // Analysis button handling
+        Button btnAnalysis = findViewById(R.id.btn_analysis);
+        btnAnalysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExpenseListActivity.this, DailyAnalysisActivity.class);
+                startActivity(intent);
             }
         });
     }

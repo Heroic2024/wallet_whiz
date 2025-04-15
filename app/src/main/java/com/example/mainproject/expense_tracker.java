@@ -134,7 +134,7 @@ public class expense_tracker extends AppCompatActivity {
         Toast.makeText(this, "Expense Added!", Toast.LENGTH_SHORT).show();
     }
 
-    // Show date picker with future dates disabled; ensure it's shown only once per tap.
+    // Updated: Show date picker with padded month and day values
     private void showDatePickerDialog() {
         isDatePickerShowing = true;
         final Calendar calendar = Calendar.getInstance();
@@ -145,7 +145,10 @@ public class expense_tracker extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                    // Pad month and day with zeros if needed so dates are always in "YYYY-MM-DD" format.
+                    String formattedMonth = String.format("%02d", selectedMonth + 1);
+                    String formattedDay = String.format("%02d", selectedDay);
+                    String selectedDate = selectedYear + "-" + formattedMonth + "-" + formattedDay;
                     expenseDate.setText(selectedDate);
                 },
                 year, month, day
