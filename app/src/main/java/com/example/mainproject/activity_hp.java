@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class activity_hp extends AppCompatActivity {
 
     private TextView txtBalance;
-    private LinearLayout btnAddExpense, btnTransfer, btnOthers;
+    private LinearLayout btnAddExpense, btnTransfer, btnOthers, btnAnalysis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class activity_hp extends AppCompatActivity {
         btnAddExpense = findViewById(R.id.btn_add_expense);
         btnTransfer = findViewById(R.id.btn_transfer); // "History" button
         btnOthers = findViewById(R.id.btn_others);
-
+        btnAnalysis = findViewById(R.id.btn_analysis);
         SharedPreferences preference = getSharedPreferences("WalletWhizPrefs", MODE_PRIVATE);
         String budget = preference.getString("budgetValue", null);
 
@@ -106,6 +106,14 @@ public class activity_hp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity_hp.this, others.class);
+                startActivity(intent);
+            }
+        });
+
+        btnAnalysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity_hp.this, ActivityDailyAnalysis.class);
                 startActivity(intent);
             }
         });
