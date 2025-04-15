@@ -54,7 +54,7 @@ public class activity_hp extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Google Pay is not installed on this device.", Toast.LENGTH_SHORT).show();
                 }
-            } catch (Exception e) {
+            } catch (Exception e) {     
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to launch Google Pay.", Toast.LENGTH_SHORT).show();
             }
@@ -139,7 +139,7 @@ public class activity_hp extends AppCompatActivity {
         btnAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity_hp.this, ActivityDailyAnalysis.class);
+                Intent intent = new Intent(activity_hp.this, DailyAnalysisActivity.class);
                 startActivity(intent);
             }
         });
